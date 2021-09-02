@@ -91,18 +91,19 @@ void show_array(int a[N][N][N])
 
 int main()
 {
-    int total, count0, count1, count2, count3, rejected = 0;
-    double A, B, C, cosA, cosB, cosC, alpha, beta, gamma;
+    int rejected = 0;
 
     // Set angles for an ACUTE base triangles ABC
-    A = 8 * pi / 19;
-    B = 6 * pi / 19;
-    C = 5 * pi / 19;
+    double constexpr A = 8 * pi / 19;
+    double constexpr B = 6 * pi / 19;
+    double constexpr C = 5 * pi / 19;
 
-    cosA = cos(A);
-    cosB = cos(B);
-    cosC = cos(C);
+    double const cosA = cos(A);
+    double const cosB = cos(B);
+    double const cosC = cos(C);
 
+    double alpha, beta, gamma;
+    
     int states[N][N][N] = {};
 
     // Use 3D array to record possible (alpha, beta, gamma) triples for given triangle
@@ -166,11 +167,12 @@ int main()
     show_array(states);
 
     // Compute and display statistices for the given triangle ABC.
-    total = count0 = count1 = count2 = count3 = 0;
-    for (auto i = 0; i < N; i++)
-        for (auto j = 0; j < N; j++)
-            for (auto k = 0; k < N; k++) {
-                switch (states[i][j][k]) {
+    int total = 0, count0 = 0, count1 = 0, count2 = 0, count3 = 0;
+
+    for (const auto& state: states)
+        for (const auto& j: state)
+            for (int k: j) {
+                switch (k) {
                 case 0:
                     count0++;
                     break;
@@ -182,6 +184,9 @@ int main()
                     break;
                 case 3:
                     count3++;
+                    break;
+                default:
+                    break;
                 }
                 total++;
             }
